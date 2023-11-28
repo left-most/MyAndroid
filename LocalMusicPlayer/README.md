@@ -1,19 +1,20 @@
 # MyAndroid
 ## *作者:雪山白凤凰*
 
-### LocalMusicPlayer
-#### 一.功能
+## LocalMusicPlayer
+### 一.功能
 1.扫描本地音乐  
 2.service后台播放  
 3.单曲循环/顺序播放  
 4.关键词搜索歌曲  
-#### 二.技术实现
-权限:
+### 二.技术实现
+
+####权限:
 ```java
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 ```
 
-获取本地音乐信息:读取本地存储loadLocalMusicData  
+####获取本地音乐信息:读取本地存储loadLocalMusicData  
 通过getContentResolver()方法获取ContentResolver对象,使用MediaStore.Audio.Media.EXTERNAL_CONTENT_URI作为Uri地址来查询本地音乐存储中的数据,使用ContentResolver访问uri地址。遍历Cursor对象,获取歌名,歌手,歌曲时长专辑以及歌曲播放路径，将这些信息封装成一个LocalMusicBean对象，并将其添加到MainData集合中。
 ```java
 private void loadLocalMusicData() {
@@ -64,7 +65,7 @@ private void loadLocalMusicData() {
         MusicAdapter.notifyDataSetChanged();
     }
 ```
-侧边栏信息
+####侧边栏信息
 ```xml
 navigation.xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -303,6 +304,24 @@ private void setDrawer() {
         fragment_introduction = new Frag_introduction();
         fragment_about = new Frag_about();
         transaction = fragmentManager.beginTransaction();
+    }
+```
+####数据库设计
+```java
+static class MySQLiteHelper extends SQLiteOpenHelper {
+        public MySQLiteHelper(Context context) {
+            super(context,"LocalMusicPlayer.db",null,1);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase sqLiteDatabase) {
+            sqLiteDatabase.execSQL("create table userInfo(_id integer primary key autoincrement,username varchar(20),password varchar(20))");
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+        }
     }
 ```
 
