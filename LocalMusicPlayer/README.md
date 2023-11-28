@@ -9,7 +9,7 @@
 4.关键词搜索歌曲  
 ### 二.技术实现
 
-####权限:
+#### 权限:
 ```java
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 ```
@@ -65,7 +65,7 @@ private void loadLocalMusicData() {
         MusicAdapter.notifyDataSetChanged();
     }
 ```
-####侧边栏信息
+#### 侧边栏信息
 ```xml
 navigation.xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -225,6 +225,68 @@ menu_about.xml
 </RelativeLayout>
 ```
 ```java
+Frag_about
+public class Frag_about extends Fragment implements View.OnTouchListener {
+    TextView qq, email, blog;
+    Button tuichu;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.menu_about, container, false);
+        view.setOnTouchListener((View.OnTouchListener) this);
+        qq = view.findViewById(R.id.link_qq);
+        blog = view.findViewById(R.id.link_blog);
+        email = view.findViewById(R.id.link_email);
+        tuichu = view.findViewById(R.id.tuichu);
+        tuichu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        qq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "qq:2510583985", Toast.LENGTH_SHORT).show();
+            }
+        });
+        blog.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
+        blog.getPaint().setAntiAlias(true);//抗锯齿
+        blog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://left-most.github.com"));
+                startActivity(Intent.createChooser(intent, "Choose a Browser"));
+            }
+        });
+        email.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
+        email.getPaint().setAntiAlias(true);//抗锯齿
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"2510583985@qq.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Hi, This is a test mail..");
+                intent.putExtra(Intent.EXTRA_TEXT   , "Welcome! Contact me anytime!  --from author");
+                startActivity(Intent.createChooser(intent, "Choose an Email Client"));
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return true;
+    }
+}
+```
+```java
 private void setDrawer() {
         navigationView.setItemIconTintList(null);
         navigationView.getChildAt(0).setVerticalScrollBarEnabled(false);
@@ -306,7 +368,7 @@ private void setDrawer() {
         transaction = fragmentManager.beginTransaction();
     }
 ```
-####数据库设计
+#### 数据库设计
 ```java
 static class MySQLiteHelper extends SQLiteOpenHelper {
         public MySQLiteHelper(Context context) {
