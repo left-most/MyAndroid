@@ -14,7 +14,7 @@
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 ```
 
-####获取本地音乐信息:读取本地存储loadLocalMusicData  
+#### 获取本地音乐信息:读取本地存储loadLocalMusicData  
 通过getContentResolver()方法获取ContentResolver对象,使用MediaStore.Audio.Media.EXTERNAL_CONTENT_URI作为Uri地址来查询本地音乐存储中的数据,使用ContentResolver访问uri地址。遍历Cursor对象,获取歌名,歌手,歌曲时长专辑以及歌曲播放路径，将这些信息封装成一个LocalMusicBean对象，并将其添加到MainData集合中。
 ```java
 private void loadLocalMusicData() {
@@ -225,7 +225,7 @@ menu_about.xml
 </RelativeLayout>
 ```
 ```java
-Frag_about
+Frag_about.java
 public class Frag_about extends Fragment implements View.OnTouchListener {
     TextView qq, email, blog;
     Button tuichu;
